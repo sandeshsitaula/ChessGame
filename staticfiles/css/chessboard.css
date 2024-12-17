@@ -1,0 +1,35 @@
+
+table {
+  margin: auto;
+  border: 1px solid black;
+}
+
+td {
+  background: tan;
+  width: 60px;
+  height: 60px;
+  border: 1px solid black;
+  font-size: 60px;
+  text-align: center;
+}
+
+tr:nth-child(even) td:nth-child(odd),
+tr:nth-child(odd) td:nth-child(even) {
+  background: chocolate;
+}
+
+
+.form-group {
+  max-width: 300px;
+  margin: 20px auto;
+}
+
+.form-control {
+  margin-bottom: 10px;
+}
+
+img {
+  display: block;
+  margin: 20px auto;
+  max-width: 200px;
+}

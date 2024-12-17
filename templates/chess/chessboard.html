@@ -1,0 +1,407 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-5">
+    <link rel="stylesheet" href="{% static 'css/chessboard.css' %}">
+    
+    <!-- Match Info Card -->
+    <h1 class="text-center text-success mb-4">Chess Match</h1>
+    <div class="match-info card shadow-sm mb-4 mx-auto" style="max-width: 500px;">
+        <div class="card-body text-center">
+            <p class="h5 text-muted mb-3">
+                Match between 
+                <span class="fw-bold text-primary">{{ game.player1.username }}</span> 
+                vs 
+                <span class="fw-bold text-danger">{{ game.player2.username }}</span>
+            </p>
+            <p class="h6 text-muted">
+                Current turn: 
+                <span id="current-turn" class="fw-bold "></span>
+            </p>
+        </div>
+    </div>
+
+    <!-- Chessboard -->
+    <div class="chessboard-container text-center">
+        
+      <table id="chessboard">
+        <tr>
+          <th></th>
+          <th>a</th>
+          <th>b</th>
+          <th>c</th>
+          <th>d</th>
+          <th>e</th>
+          <th>f</th>
+          <th>g</th>
+          <th>h</th>
+        </tr>
+        <tr>
+          <th>8</th>
+          <td id="a8">&#9820;</td>
+          <td id="b8">&#9822;</td>
+          <td id="c8">&#9821;</td>
+          <td id="d8">&#9819;</td>
+          <td id="e8">&#9818;</td>
+          <td id="f8">&#9821;</td>
+          <td id="g8">&#9822;</td>
+          <td id="h8">&#9820;</td>
+        </tr>
+        <tr>
+          <th>7</th>
+          <td id="a7">&#9823;</td>
+          <td id="b7">&#9823;</td>
+          <td id="c7">&#9823;</td>
+          <td id="d7">&#9823;</td>
+          <td id="e7">&#9823;</td>
+          <td id="f7">&#9823;</td>
+          <td id="g7">&#9823;</td>
+          <td id="h7">&#9823;</td>
+        </tr>
+        <tr>
+          <th>6</th>
+          <td id="a6">&nbsp;</td>
+          <td id="b6">&nbsp;</td>
+          <td id="c6">&nbsp;</td>
+          <td id="d6">&nbsp;</td>
+          <td id="e6">&nbsp;</td>
+          <td id="f6">&nbsp;</td>
+          <td id="g6">&nbsp;</td>
+          <td id="h6">&nbsp;</td>
+        </tr>
+        <tr>
+          <th>5</th>
+          <td id="a5">&nbsp;</td>
+          <td id="b5">&nbsp;</td>
+          <td id="c5">&nbsp;</td>
+          <td id="d5">&nbsp;</td>
+          <td id="e5">&nbsp;</td>
+          <td id="f5">&nbsp;</td>
+          <td id="g5">&nbsp;</td>
+          <td id="h5">&nbsp;</td>
+        </tr>
+        <tr>
+          <th>4</th>
+          <td id="a4">&nbsp;</td>
+          <td id="b4">&nbsp;</td>
+          <td id="c4">&nbsp;</td>
+          <td id="d4">&nbsp;</td>
+          <td id="e4">&nbsp;</td>
+          <td id="f4">&nbsp;</td>
+          <td id="g4">&nbsp;</td>
+          <td id="h4">&nbsp;</td>
+        </tr>
+        <tr>
+          <th>3</th>
+          <td id="a3">&nbsp;</td>
+          <td id="b3">&nbsp;</td>
+          <td id="c3">&nbsp;</td>
+          <td id="d3">&nbsp;</td>
+          <td id="e3">&nbsp;</td>
+          <td id="f3">&nbsp;</td>
+          <td id="g3">&nbsp;</td>
+          <td id="h3">&nbsp;</td>
+        </tr>
+        <tr>
+          <th>2</th>
+          <td id="a2">&#9817;</td>
+          <td id="b2">&#9817;</td>
+          <td id="c2">&#9817;</td>
+          <td id="d2">&#9817;</td>
+          <td id="e2">&#9817;</td>
+          <td id="f2">&#9817;</td>
+          <td id="g2">&#9817;</td>
+          <td id="h2">&#9817;</td>
+        </tr>
+        <tr>
+          <th>1</th>
+          <td id="a1">&#9814;</td>
+          <td id="b1">&#9816;</td>
+          <td id="c1">&#9815;</td>
+          <td id="d1">&#9813;</td>
+          <td id="e1">&#9812;</td>
+          <td id="f1">&#9815;</td>
+          <td id="g1">&#9816;</td>
+          <td id="h1">&#9814;</td>
+        </tr>
+      </table>
+
+    </div>
+
+    <!-- Move Controls -->
+    <div class="mt-4 mb-4 d-flex justify-content-center">
+        <div class="input-group" style="max-width: 400px;">
+            <input type="text" 
+                   id="src-dst" 
+                   class="form-control text-center" 
+                   placeholder="e2-e4" 
+                   style="max-width: 150px;">
+            <button onclick="executeMove()" class="btn btn-primary">
+                Make Move
+            </button>
+            <button onclick="forfeitMatch()" id="forfeitBtn" class="btn btn-danger ms-3">
+                Resign
+            </button>
+        </div>
+    </div>
+
+    <!-- Match Notes -->
+    <div class="card shadow-sm mt-4">
+        <div class="card-header bg-light">
+            <h5 class="mb-0">Match Notes</h5>
+        </div>
+        <div class="card-body">
+            <textarea 
+                class="form-control" 
+                id="noteContent" 
+                name="note" 
+                rows="5" 
+                placeholder="Add your match notes here...">{{ note.text }}</textarea>
+            <button onclick="saveNotes()" class="btn btn-primary mt-3">
+                Save Notes
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Essential Scripts -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    // Constants
+    const matchId = "{{ game.id }}";
+    const currentUser = "{{ request.user.username }}";
+
+</script>
+
+    <script>
+        // chessboard.js
+
+let currentPlayer;
+let isMatchEnded = false;
+let matchResult = null;
+
+// Board State Functions
+function updateBoardPosition(boardState) {
+    // Clear all squares
+    for (let row = 1; row <= 8; row++) {
+        for (let col = "a".charCodeAt(0); col <= "h".charCodeAt(0); col++) {
+            const position = String.fromCharCode(col) + row;
+            $(`#${position}`).html("");
+        }
+    }
+
+    // Set pieces according to current state
+    for (const [position, piece] of Object.entries(boardState)) {
+        $(`#${position}`).html(piece);
+    }
+}
+
+function updateTurnDisplay() {
+    const turnDisplay = document.getElementById("current-turn");
+    if (turnDisplay) {
+        turnDisplay.textContent = currentPlayer;
+        turnDisplay.style.color = currentPlayer === currentUser ? "#28a745" : "#dc3545";
+    }
+}
+
+function toggleMoveControls() {
+    const isPlayerTurn = currentPlayer === currentUser;
+    $("#src-dst").prop("disabled", !isPlayerTurn);
+    $("#moveBtn").prop("disabled", !isPlayerTurn);
+}
+
+// Match State Management
+function showMatchEndMessage(result) {
+    let message;
+    switch(result) {
+        case "WIN":
+            message = "Congratulations! You've won the match!";
+            break;
+        case "LOSS":
+            message = "Match ended. Better luck next time!";
+            break;
+        case "DRAW":
+            message = "Match ended in a draw!";
+            break;
+        default:
+            return;
+    }
+    
+    const goToLobby = confirm(message + "\nReturn to lobby?");
+    if (goToLobby) {
+        window.location.href = "/play/lobby/";
+    }
+}
+
+function updateMatchState(data) {
+                updateBoardPosition(data.board_state);
+                currentPlayer = data.current_turn;
+                updateTurnDisplay();
+                toggleMoveControls();
+
+                if (data.is_game_over && !isMatchEnded) {
+                    isMatchEnded = true;
+                    matchResult = data.winner===currentUser?"WIN":"LOSS";
+                  if (data.winner==""){
+                    matchResult="DRAW"
+                  }
+                    showMatchEndMessage(matchResult);
+                }
+}
+
+
+
+// Match Notes
+function saveNotes() {
+    const noteContent = document.getElementById('noteContent').value;
+    
+    fetch(`/play/edit-game/${matchId}/`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "X-CSRFToken": getCookie('csrftoken')
+        },
+        body: JSON.stringify({ 'journal': noteContent })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.status) {
+            showAlert("Notes saved successfully", "success");
+        } else {
+            showAlert(data.message || "Failed to save notes", "error");
+        }
+    })
+    .catch(error => {
+        showAlert("Error saving notes", "error");
+        console.error("Notes error:", error);
+    });
+}
+
+// Utility Functions
+function showAlert(message, type) {
+    const alertHtml = `
+        <div class="alert alert-${type} alert-dismissible fade show" role="alert">
+            ${message}
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    `;
+    const alertContainer = document.createElement('div');
+    alertContainer.innerHTML = alertHtml;
+    document.querySelector('.match-info').after(alertContainer);
+    
+    setTimeout(() => alertContainer.remove(), 3000);
+}
+
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+
+// Event Handlers
+document.addEventListener('DOMContentLoaded', function() {
+    // Initialize move button
+    const moveBtn = document.getElementById('moveBtn');
+    if (moveBtn) {
+        moveBtn.addEventListener('click', executeMove);
+    }
+
+    // Initialize input handling
+    const moveInput = document.getElementById('src-dst');
+    if (moveInput) {
+        moveInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                executeMove();
+            }
+        });
+    }
+});
+
+
+
+  var wsScheme = window.location.protocol === "https:" ? "wss" : "ws";
+   const socket = new WebSocket(`${wsScheme}://${window.location.host}/ws/game/?user_id={{request.user.id}}&match_id={{game.id}}`);
+
+
+
+socket.onopen = function() {
+    console.log("WebSocket connection established.");
+  const message={
+    type:'intialBoard'
+  }
+    socket.send(JSON.stringify(message))
+};
+// Move Handling
+function executeMove() {
+    const moveInput = $("#src-dst").val().toLowerCase();
+    const [fromPosition, toPosition] = moveInput.split("-");
+
+    console.log(fromPosition,toPosition)
+    if (!fromPosition || !toPosition) {
+        showAlert("Please enter both source and destination positions (e.g., e2-e4)", "warning");
+        return;
+    }
+  const message={
+    type:'chess_move',
+    from:fromPosition,
+    to:toPosition
+  }
+  socket.send(JSON.stringify(message))
+
+}
+// Match Control
+function forfeitMatch() {
+    if (!confirm("Are you sure you want to forfeit this match?")) {
+        return;
+    }
+
+  const message={
+    type:'forfeit_match'
+  }
+  socket.send(JSON.stringify(message))
+}
+
+
+
+socket.onmessage = function(event) {
+    const data = JSON.parse(event.data);
+    if (data.type=='chess_move') {
+      console.log("inside match update state")
+      updateMatchState(data)
+    }else if (data.type=='error'){
+      showAlert(data.message)
+    }else if (data.type=='forfeit_match'){
+      console.log(data,'data from forfeit match')
+      let matchOutcome=data.username==currentUser?"LOSS":"WIN"
+      showMatchEndMessage(matchOutcome)
+    }
+    else {
+        console.log("Error:", data);
+    }
+};
+
+socket.onerror = function(error) {
+    console.error("WebSocket Error:", error);
+};
+
+socket.onclose = function(event) {
+    if (event.wasClean) {
+        console.log(`Closed cleanly, code=${event.code}, reason=${event.reason}`);
+    } else {
+        console.error(`Connection died`);
+    }
+};
+
+    </script>
+<!-- Include the rest of your chess logic JS -->
+{% endblock %}

@@ -1,0 +1,53 @@
+<!-- templates/auth/register.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+<div style="max-width: 400px; margin: 2rem auto; padding: 1rem;">
+    <h2>Register</h2>
+    <form id="registerForm">
+        {% csrf_token %}
+        <div style="margin-bottom: 1rem;">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required>
+        </div>
+        <div style="margin-bottom: 1rem;">
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+        </div>
+        <div style="margin-bottom: 1rem;">
+            <label for="confirm_password">Confirm Password:</label>
+            <input type="password" id="confirm_password" name="confirm_password" required>
+        </div>
+        <button type="submit">Register</button>
+    </form>
+</div>
+
+<script>
+document.getElementById('registerForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    
+    const formData = new FormData(e.target);
+    
+    try {
+        const response = await fetch('/register/', {
+            method: 'POST',
+            body: formData,
+            credentials: 'include',  
+        });
+        
+        const data = await response.json();
+        
+        if (response.ok) {
+            window.location.href = '/play/lobby/';  
+        } else {
+            alert(data.error);
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        alert('An error occurred during registration');
+    }
+});
+</script>
+{% endblock %}
+
+

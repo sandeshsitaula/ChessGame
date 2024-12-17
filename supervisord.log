@@ -1,0 +1,125 @@
+2024-11-16 12:10:50,943 INFO supervisord started with pid 5607
+2024-11-16 12:10:51,947 INFO spawned: 'daphne' with pid 5609
+2024-11-16 12:10:51,949 INFO spawned: 'redis' with pid 5610
+2024-11-16 12:10:51,954 WARN exited: daphne (exit status 127; not expected)
+2024-11-16 12:10:51,968 WARN exited: redis (exit status 1; not expected)
+2024-11-16 12:10:52,973 INFO spawned: 'daphne' with pid 5611
+2024-11-16 12:10:52,975 INFO spawned: 'redis' with pid 5612
+2024-11-16 12:10:52,979 WARN exited: daphne (exit status 127; not expected)
+2024-11-16 12:10:52,990 WARN exited: redis (exit status 1; not expected)
+2024-11-16 12:10:54,995 INFO spawned: 'daphne' with pid 5615
+2024-11-16 12:10:54,998 INFO spawned: 'redis' with pid 5616
+2024-11-16 12:10:55,000 WARN exited: daphne (exit status 127; not expected)
+2024-11-16 12:10:55,012 WARN exited: redis (exit status 1; not expected)
+2024-11-16 12:10:58,018 INFO spawned: 'daphne' with pid 5617
+2024-11-16 12:10:58,020 INFO spawned: 'redis' with pid 5618
+2024-11-16 12:10:58,024 WARN exited: daphne (exit status 127; not expected)
+2024-11-16 12:10:58,034 INFO gave up: daphne entered FATAL state, too many start retries too quickly
+2024-11-16 12:10:58,035 WARN exited: redis (exit status 1; not expected)
+2024-11-16 12:10:59,037 INFO gave up: redis entered FATAL state, too many start retries too quickly
+2024-11-16 12:11:01,041 WARN received SIGINT indicating exit request
+2024-11-16 12:11:15,711 INFO supervisord started with pid 5684
+2024-11-16 12:11:16,715 INFO spawned: 'daphne' with pid 5686
+2024-11-16 12:11:16,717 INFO spawned: 'redis' with pid 5687
+2024-11-16 12:11:16,732 WARN exited: redis (exit status 1; not expected)
+2024-11-16 12:11:17,307 WARN exited: daphne (exit status 0; not expected)
+2024-11-16 12:11:18,311 INFO spawned: 'daphne' with pid 5688
+2024-11-16 12:11:18,313 INFO spawned: 'redis' with pid 5689
+2024-11-16 12:11:18,338 WARN exited: redis (exit status 1; not expected)
+2024-11-16 12:11:18,921 WARN exited: daphne (exit status 0; not expected)
+2024-11-16 12:11:20,926 INFO spawned: 'daphne' with pid 5691
+2024-11-16 12:11:20,929 INFO spawned: 'redis' with pid 5692
+2024-11-16 12:11:20,944 WARN exited: redis (exit status 1; not expected)
+2024-11-16 12:11:21,510 WARN exited: daphne (exit status 0; not expected)
+2024-11-16 12:11:24,516 INFO spawned: 'daphne' with pid 5694
+2024-11-16 12:11:24,520 INFO spawned: 'redis' with pid 5695
+2024-11-16 12:11:24,536 WARN exited: redis (exit status 1; not expected)
+2024-11-16 12:11:25,050 INFO gave up: redis entered FATAL state, too many start retries too quickly
+2024-11-16 12:11:25,158 WARN exited: daphne (exit status 0; not expected)
+2024-11-16 12:11:26,160 INFO gave up: daphne entered FATAL state, too many start retries too quickly
+2024-11-16 12:12:04,203 WARN received SIGINT indicating exit request
+2024-11-16 12:12:14,629 INFO supervisord started with pid 5857
+2024-11-16 12:12:15,633 INFO spawned: 'daphne' with pid 5858
+2024-11-16 12:12:15,998 WARN exited: daphne (exit status 0; not expected)
+2024-11-16 12:12:17,003 INFO spawned: 'daphne' with pid 5860
+2024-11-16 12:12:17,361 WARN exited: daphne (exit status 0; not expected)
+2024-11-16 12:12:19,366 INFO spawned: 'daphne' with pid 5861
+2024-11-16 12:12:19,726 WARN exited: daphne (exit status 0; not expected)
+2024-11-16 12:12:21,729 WARN received SIGINT indicating exit request
+2024-11-16 12:12:30,945 INFO supervisord started with pid 5894
+2024-11-16 12:12:31,949 INFO spawned: 'daphne' with pid 5898
+2024-11-16 12:12:33,256 INFO success: daphne entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2024-11-16 12:14:33,693 WARN received SIGINT indicating exit request
+2024-11-16 12:14:33,693 INFO waiting for daphne to die
+2024-11-16 12:14:33,791 INFO stopped: daphne (exit status 0)
+2024-11-16 12:14:55,376 INFO supervisord started with pid 6126
+2024-11-16 12:14:56,380 INFO spawned: 'daphne' with pid 6127
+2024-11-16 12:14:56,381 INFO spawnerr: unknown error making dispatchers for 'redis': EACCES
+2024-11-16 12:14:57,677 INFO success: daphne entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2024-11-16 12:14:57,678 INFO spawnerr: unknown error making dispatchers for 'redis': EACCES
+2024-11-16 12:14:59,681 INFO spawnerr: unknown error making dispatchers for 'redis': EACCES
+2024-11-16 12:15:02,685 INFO spawnerr: unknown error making dispatchers for 'redis': EACCES
+2024-11-16 12:15:02,685 INFO gave up: redis entered FATAL state, too many start retries too quickly
+2024-11-16 12:15:23,707 WARN received SIGINT indicating exit request
+2024-11-16 12:15:23,707 INFO waiting for daphne to die
+2024-11-16 12:15:24,708 WARN received SIGINT indicating exit request
+2024-11-16 12:15:24,854 INFO stopped: daphne (exit status 0)
+2024-11-16 12:15:25,694 INFO supervisord started with pid 6227
+2024-11-16 12:15:26,699 INFO spawned: 'daphne' with pid 6228
+2024-11-16 12:15:26,700 INFO spawnerr: unknown error making dispatchers for 'redis': EACCES
+2024-11-16 12:15:28,189 INFO success: daphne entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2024-11-16 12:15:28,189 INFO spawnerr: unknown error making dispatchers for 'redis': EACCES
+2024-11-16 12:15:30,193 INFO spawnerr: unknown error making dispatchers for 'redis': EACCES
+2024-11-16 12:15:33,197 INFO spawnerr: unknown error making dispatchers for 'redis': EACCES
+2024-11-16 12:15:33,197 INFO gave up: redis entered FATAL state, too many start retries too quickly
+2024-11-16 12:15:46,214 WARN received SIGINT indicating exit request
+2024-11-16 12:15:46,214 INFO waiting for daphne to die
+2024-11-16 12:15:47,333 INFO stopped: daphne (exit status 0)
+2024-11-16 12:15:47,333 WARN received SIGINT indicating exit request
+2024-11-16 12:16:18,047 INFO supervisord started with pid 6283
+2024-11-16 12:16:19,051 INFO spawned: 'daphne' with pid 6284
+2024-11-16 12:16:19,053 INFO spawnerr: unknown error making dispatchers for 'redis': EACCES
+2024-11-16 12:16:20,541 INFO success: daphne entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2024-11-16 12:16:20,542 INFO spawnerr: unknown error making dispatchers for 'redis': EACCES
+2024-11-16 12:16:22,545 INFO spawnerr: unknown error making dispatchers for 'redis': EACCES
+2024-11-16 12:16:25,549 INFO spawnerr: unknown error making dispatchers for 'redis': EACCES
+2024-11-16 12:16:25,549 INFO gave up: redis entered FATAL state, too many start retries too quickly
+2024-11-16 12:16:26,551 WARN received SIGINT indicating exit request
+2024-11-16 12:16:26,552 INFO waiting for daphne to die
+2024-11-16 12:16:27,691 INFO stopped: daphne (exit status 0)
+2024-11-16 12:16:27,691 WARN received SIGINT indicating exit request
+2024-11-16 12:17:52,741 INFO supervisord started with pid 6409
+2024-11-16 12:17:53,745 INFO spawned: 'daphne' with pid 6410
+2024-11-16 12:17:53,746 INFO spawnerr: unknown error making dispatchers for 'redis': EACCES
+2024-11-16 12:17:55,046 INFO success: daphne entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2024-11-16 12:17:55,047 INFO spawnerr: unknown error making dispatchers for 'redis': EACCES
+2024-11-16 12:17:57,050 INFO spawnerr: unknown error making dispatchers for 'redis': EACCES
+2024-11-16 12:18:00,054 INFO spawnerr: unknown error making dispatchers for 'redis': EACCES
+2024-11-16 12:18:00,054 INFO gave up: redis entered FATAL state, too many start retries too quickly
+2024-11-16 12:18:01,056 WARN received SIGINT indicating exit request
+2024-11-16 12:18:01,056 INFO waiting for daphne to die
+2024-11-16 12:18:02,198 INFO stopped: daphne (exit status 0)
+2024-11-16 12:18:02,198 WARN received SIGINT indicating exit request
+2024-11-16 12:19:09,105 INFO supervisord started with pid 6477
+2024-11-16 12:19:10,109 INFO spawned: 'daphne' with pid 6478
+2024-11-16 12:19:11,400 INFO success: daphne entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2024-11-16 12:19:55,451 WARN received SIGINT indicating exit request
+2024-11-16 12:19:55,451 INFO waiting for daphne to die
+2024-11-16 12:19:55,555 INFO stopped: daphne (exit status 0)
+2024-11-16 12:19:56,299 INFO supervisord started with pid 6663
+2024-11-16 12:19:57,303 INFO spawned: 'daphne' with pid 6664
+2024-11-16 12:19:57,615 WARN exited: daphne (exit status 1; not expected)
+2024-11-16 12:19:58,618 INFO spawned: 'daphne' with pid 6665
+2024-11-16 12:19:58,934 WARN exited: daphne (exit status 1; not expected)
+2024-11-16 12:20:00,937 INFO spawned: 'daphne' with pid 6666
+2024-11-16 12:20:01,244 WARN exited: daphne (exit status 1; not expected)
+2024-11-16 12:20:04,249 INFO spawned: 'daphne' with pid 6677
+2024-11-16 12:20:04,571 WARN exited: daphne (exit status 1; not expected)
+2024-11-16 12:20:05,571 INFO gave up: daphne entered FATAL state, too many start retries too quickly
+2024-11-16 12:20:42,616 WARN received SIGINT indicating exit request
+2024-11-16 12:22:45,041 INFO supervisord started with pid 6816
+2024-11-16 12:22:46,045 INFO spawned: 'daphne' with pid 6817
+2024-11-16 12:22:47,336 INFO success: daphne entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2024-11-16 12:25:05,492 WARN received SIGINT indicating exit request
+2024-11-16 12:25:05,492 INFO waiting for daphne to die
+2024-11-16 12:25:05,572 INFO stopped: daphne (exit status 0)

@@ -23,6 +23,13 @@
     </div>
 
     <!-- Chessboard -->
+<style>
+td{
+  cursor:pointer;
+    width:100px;
+      height:100px;
+}
+</style>
     <div class="chessboard-container text-center">
         
       <table id="chessboard">
@@ -328,9 +335,8 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 
-
-  var wsScheme = window.location.protocol === "https:" ? "wss" : "ws";
-   const socket = new WebSocket(`${wsScheme}://${window.location.host}/ws/game/?user_id={{request.user.id}}&match_id={{game.id}}`);
+var wsScheme = window.location.protocol === "https:" ? "wss" : "ws";
+  const socket = new WebSocket(`${wsScheme}://${window.location.host}/ws/game/?user_id={{request.user.id}}&match_id={{game.id}}`);
 
 
 
@@ -373,22 +379,7 @@ function forfeitMatch() {
 
 
 
-socket.onmessage = function(event) {
-    const data = JSON.parse(event.data);
-    if (data.type=='chess_move') {
-      console.log("inside match update state")
-      updateMatchState(data)
-    }else if (data.type=='error'){
-      showAlert(data.message)
-    }else if (data.type=='forfeit_match'){
-      console.log(data,'data from forfeit match')
-      let matchOutcome=data.username==currentUser?"LOSS":"WIN"
-      showMatchEndMessage(matchOutcome)
-    }
-    else {
-        console.log("Error:", data);
-    }
-};
+
 
 socket.onerror = function(error) {
     console.error("WebSocket Error:", error);
@@ -402,6 +393,67 @@ socket.onclose = function(event) {
     }
 };
 
+let selectedPiece = null; 
+
+function highlightSelectedPiece(position) {
+    $(".chessboard-container td").css("transform", "scale(1)"); 
+    $(`#${position}`).css("transform", "scale(1.1)"); 
+    $(`#${position}`).css("border-color", "red"); 
+    $(`#${position}`).css("border", "2px solid red"); 
+}
+
+// Clear selection
+function clearSelection() {
+    selectedPiece = null;
+    $(".chessboard-container td").css("transform", "scale(1)");
+}
+
+// Handle board clicks
+$(".chessboard-container td").on("click", function () {
+    const clickedPosition = $(this).attr("id");
+
+  if(currentPlayer != currentUser){
+        showAlert("Not your turn");
+      return
+
+  }
+    if (selectedPiece) {
+        if (clickedPosition !== selectedPiece) {
+            const moveInput = `${selectedPiece}-${clickedPosition}`;
+            console.log("Move Input:", moveInput);
+
+            const message = {
+                type: "chess_move",
+                from: selectedPiece,
+                to: clickedPosition
+            };
+            socket.send(JSON.stringify(message));
+
+            clearSelection(); 
+        }
+    } else if ($(this).html().trim()) {
+        selectedPiece = clickedPosition;
+        highlightSelectedPiece(clickedPosition);
+    }
+});
+
+// WebSocket update
+socket.onmessage = function (event) {
+    const data = JSON.parse(event.data);
+
+    if (data.type === "chess_move") {
+        updateMatchState(data);
+        clearSelection(); 
+    } else if (data.type === "error") {
+        showAlert(data.message, "danger");
+        clearSelection();
+    } else if (data.type === "forfeit_match") {
+        let matchOutcome = data.username === currentUser ? "LOSS" : "WIN";
+        showMatchEndMessage(matchOutcome);
+    } else {
+        console.error("Unknown WebSocket message:", data);
+    }
+};
+
     </script>
-<!-- Include the rest of your chess logic JS -->
 {% endblock %}

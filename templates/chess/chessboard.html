@@ -398,8 +398,6 @@ let selectedPiece = null;
 function highlightSelectedPiece(position) {
     $(".chessboard-container td").css("transform", "scale(1)"); 
     $(`#${position}`).css("transform", "scale(1.1)"); 
-    $(`#${position}`).css("border-color", "red"); 
-    $(`#${position}`).css("border", "2px solid red"); 
 }
 
 // Clear selection

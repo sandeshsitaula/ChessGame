@@ -50,7 +50,6 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -87,15 +86,6 @@ TEMPLATES = [
 WSGI_APPLICATION = 'django_chess_game.wsgi.application'
 ASGI_APPLICATION = 'django_chess_game.asgi.application'
 
-CSRF_TRUSTED_ORIGINS = [
-    'https://chessgamebypavan.com',
-    'http://chessgamebypavan.com',
-    'http://chessgamebypavanv3.com',
-    'https://chessgamebypavanv3.com',
-    'http://35.223.197.49',
-    'http://35.223.197.49:8000'
-
-]
 
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases

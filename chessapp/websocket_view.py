@@ -60,6 +60,7 @@ class HomeWebSocketView(AsyncWebsocketConsumer):
 
             if data.get("type") == "send_challenge":
                 challenge_response = await self.handle_send_challenge(data)
+                print(challenge_response, "challenge resposne")
                 if not challenge_response["status"]:
                     await self.send(
                         json.dumps(
@@ -157,44 +158,55 @@ class HomeWebSocketView(AsyncWebsocketConsumer):
         from .models import Match
 
         user_id = data.get("user_id")
+
+        ai = False
         current_user = self.scope["profile"].user
-        target_player = User.objects.get(id=user_id)
+        if user_id == "AI":
+            ai = True
+            target_player = User.objects.filter(username="AI").first()
+            user_id = target_player.id
+        else:
+            target_player = User.objects.get(id=user_id)
 
-        active_match = Match.objects.filter(
-            (
-                Q(player1=current_user)
-                | Q(player2=current_user)
-                | Q(player1=target_player)
-                | Q(player2=target_player)
-            )
-            & Q(status="ACTIVE")
-        ).first()
+            active_match = Match.objects.filter(
+                (
+                    Q(player1=current_user)
+                    | Q(player2=current_user)
+                    | Q(player1=target_player)
+                    | Q(player2=target_player)
+                )
+                & Q(status="ACTIVE")
+            ).first()
 
-        if active_match:
-            if (
-                active_match.player1 == current_user
-                or active_match.player2 == current_user
-            ):
-                return {
-                    "status": False,
-                    "message": "Complete your current match before starting a new one",
-                    "ongoing": "Player",
-                }
-            else:
-                return {
-                    "status": False,
-                    "message": "Selected player is currently in another match",
-                    "ongoing": "Opponent",
-                }
+            if active_match:
+                if (
+                    active_match.player1 == current_user
+                    or active_match.player2 == current_user
+                ):
+                    return {
+                        "status": False,
+                        "message": "Complete your current match before starting a new one",
+                        "ongoing": "Player",
+                    }
+                else:
+                    return {
+                        "status": False,
+                        "message": "Selected player is currently in another match",
+                        "ongoing": "Opponent",
+                    }
 
         new_match = Match.objects.create(
             player1=current_user, player2=target_player, status="INVITED"
         )
+        if ai:
+            new_match.status = "ACTIVE"
+            new_match.save()
         return {
             "status": True,
             "message": "Challenge sent successfully",
             "opponent": user_id,
             "game_id": new_match.id,
+            "ai": True,
         }
 
     @database_sync_to_async
@@ -259,9 +271,6 @@ class HomeWebSocketView(AsyncWebsocketConsumer):
             Q(player2=profile.user) & Q(status="INVITED")
         ).values("id", "player1__username")
         return list(pending_challenges)
-
-
-##another websocket
 
 
 class ChessWebSocketView(AsyncWebsocketConsumer):

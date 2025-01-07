@@ -45,7 +45,7 @@
                        <h6 class="mb-0">Play With PC</h6>
                        <small class="text-muted">Online</small>
                    </div>
-               <button onclick="sendGameInvite(AI)" style="margin-left:20px" class="btn btn-outline-primary btn-sm rounded-pill px-4">
+               <button onclick="sendGameInvite('AI')" style="margin-left:20px" class="btn btn-outline-primary btn-sm rounded-pill px-4">
                    Challenge
                    <i class="bi bi-arrow-right-circle ms-2"></i>
                </button>
@@ -461,6 +461,7 @@
    
    // Game Challenge System
    function sendGameInvite(playerId) {
+      console.log("playerid",playerId)
    const message={
    type:"send_challenge",
    user_id:playerId

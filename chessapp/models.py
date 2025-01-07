@@ -3,7 +3,7 @@ from django.contrib.auth import get_user_model
 
 User = get_user_model()
 
-class Match(models.Model):  # Changed from Game
+class Match(models.Model):  
     GAME_STATUS = [
         ('INVITED', 'Invited'),
         ('PENDING', 'Pending'),

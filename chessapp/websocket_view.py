@@ -233,8 +233,6 @@ class HomeWebSocketView(AsyncWebsocketConsumer):
         ).values_list("user__id", flat=True)
         ai = User.objects.filter(username="AI").values_list("id", flat=True)
 
-        print(ai)
-
         unavailable_ids = occupied_users.union(set(inactive_users)).union(set(ai))
         available_players = User.objects.exclude(id__in=unavailable_ids).values(
             "id", "username"

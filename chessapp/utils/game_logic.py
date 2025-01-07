@@ -2,6 +2,15 @@ import chess
 
 
 class ChessEngine:
+    PIECE_VALUES = {
+        "p": 1,  # Pawn
+        "n": 3,  # Knight
+        "b": 3,  # Bishop
+        "r": 5,  # Rook
+        "q": 9,  # Queen
+        "k": 0,  # King (not valued directly)
+    }
+
     def __init__(self, match=None):
         if match and match.board_state:
             self.chess_board = chess.Board(match.board_state)
@@ -63,3 +72,66 @@ class ChessEngine:
 
     def get_match_result(self):
         return self.chess_board.result()
+
+    def evaluate_board(self):
+        """Evaluate the board state from the perspective of the current player."""
+        evaluation = 0
+        for square in chess.SQUARES:
+            piece = self.chess_board.piece_at(square)
+            if piece:
+                value = self.PIECE_VALUES[piece.symbol().lower()]
+                if piece.color == chess.WHITE:
+                    evaluation += value
+                else:
+                    evaluation -= value
+        return evaluation
+
+    def minimax(self, depth, is_maximizing, alpha=float("-inf"), beta=float("inf")):
+        """Minimax algorithm with alpha-beta pruning."""
+        if depth == 0 or self.chess_board.is_game_over():
+            return self.evaluate_board()
+
+        if is_maximizing:
+            max_eval = float("-inf")
+            for move in self.chess_board.legal_moves:
+                self.chess_board.push(move)
+                eval = self.minimax(depth - 1, False, alpha, beta)
+                self.chess_board.pop()
+                max_eval = max(max_eval, eval)
+                alpha = max(alpha, eval)
+                if beta <= alpha:
+                    break
+            return max_eval
+        else:
+            min_eval = float("inf")
+            for move in self.chess_board.legal_moves:
+                self.chess_board.push(move)
+                eval = self.minimax(depth - 1, True, alpha, beta)
+                self.chess_board.pop()
+                min_eval = min(min_eval, eval)
+                beta = min(beta, eval)
+                if beta <= alpha:
+                    break
+            return min_eval
+
+    def get_best_move(self, depth):
+        """Find the best move for the current player."""
+        print("true here", True)
+        best_move = None
+        best_value = float("-inf") if self.chess_board.turn else float("inf")
+
+        for move in self.chess_board.legal_moves:
+            self.chess_board.push(move)
+            eval = self.minimax(depth - 1, not self.chess_board.turn)
+            self.chess_board.pop()
+
+            if self.chess_board.turn:  # Maximizing
+                if eval > best_value:
+                    best_value = eval
+                    best_move = move
+            else:  # Minimizing
+                if eval < best_value:
+                    best_value = eval
+                    best_move = move
+
+        return best_move

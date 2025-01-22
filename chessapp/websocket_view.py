@@ -59,6 +59,7 @@ class HomeWebSocketView(AsyncWebsocketConsumer):
                 )
 
             if data.get("type") == "send_challenge":
+                print("handling challenge")
                 challenge_response = await self.handle_send_challenge(data)
                 print(challenge_response, "challenge resposne")
                 if not challenge_response["status"]:
@@ -83,8 +84,8 @@ class HomeWebSocketView(AsyncWebsocketConsumer):
                     },
                 )
 
+                print(challenge_response)
                 if challenge_response.get("ai"):
-                    print("challenging ai now lets see")
                     await self.send(
                         json.dumps(
                             {
@@ -479,6 +480,11 @@ class ChessWebSocketView(AsyncWebsocketConsumer):
 
         if match_engine.validate_move(from_pos, to_pos):
             match_engine.execute_move(from_pos, to_pos)
+            current_player = (
+                    current_match.player1.username
+                    if current_match.moves_count % 2 == 0
+                    else current_match.player2.username
+                )
 
             # Check if match is over
             winner = ""
@@ -499,6 +505,7 @@ class ChessWebSocketView(AsyncWebsocketConsumer):
                     current_match.winner = None
                 current_match.save()
                 winner = current_match.winner.username
+
 
             else:
                 # Trigger AI move if the next player is AI

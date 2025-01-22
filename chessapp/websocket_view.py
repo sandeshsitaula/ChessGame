@@ -508,24 +508,24 @@ class ChessWebSocketView(AsyncWebsocketConsumer):
 
 
             else:
-                # Trigger AI move if the next player is AI
-                current_player = (
-                    current_match.player1.username
-                    if current_match.moves_count % 2 == 0
-                    else current_match.player2.username
-                )
-
                 print(current_player)
                 if current_player == "AI":  # Assuming "AI" represents the AI player
                     best_move = match_engine.get_best_move(
                         depth=3
                     )  # Adjust depth as needed
-                    print("best_move", best_move)
                     if best_move:
                         from_pos = chess.SQUARE_NAMES[best_move.from_square]
                         to_pos = chess.SQUARE_NAMES[best_move.to_square]
                         print("from_post", from_pos, to_pos)
                         match_engine.execute_move(from_pos, to_pos)
+                        # Trigger AI move if the next player is AI
+                        current_player = (
+                            current_match.player1.username
+                            if current_match.moves_count % 2 == 0
+                            else current_match.player2.username
+                        )
+
+
                         if match_engine.is_match_over():
                             current_match.is_active = False
                             result = match_engine.get_match_result()

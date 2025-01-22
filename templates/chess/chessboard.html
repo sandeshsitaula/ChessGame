@@ -404,6 +404,8 @@ function highlightSelectedPiece(position) {
 function clearSelection() {
     selectedPiece = null;
     $(".chessboard-container td").css("transform", "scale(1)");
+    
+  $("#src-dst").val("")
 }
 
 // Handle board clicks
@@ -418,7 +420,6 @@ $(".chessboard-container td").on("click", function () {
     if (selectedPiece) {
         if (clickedPosition !== selectedPiece) {
             const moveInput = `${selectedPiece}-${clickedPosition}`;
-            console.log("Move Input:", moveInput);
 
             const message = {
                 type: "chess_move",

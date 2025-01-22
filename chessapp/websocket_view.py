@@ -83,6 +83,16 @@ class HomeWebSocketView(AsyncWebsocketConsumer):
                     },
                 )
 
+                if challenge_response.get("ai"):
+                    print("challenging ai now lets see")
+                    await self.send(
+                        json.dumps(
+                            {
+                                "type": "invite_accepted",
+                            },
+                        )
+                    )
+
             if data.get("type") == "pending_challenges":
                 pending_challenges = await self.check_pending_challenges(profile)
                 await self.send(
@@ -201,12 +211,13 @@ class HomeWebSocketView(AsyncWebsocketConsumer):
         if ai:
             new_match.status = "ACTIVE"
             new_match.save()
+
         return {
             "status": True,
             "message": "Challenge sent successfully",
             "opponent": user_id,
             "game_id": new_match.id,
-            "ai": True,
+            "ai": ai,
         }
 
     @database_sync_to_async
